@@ -78,7 +78,7 @@ class ProfileController extends BaseController
      *
      * @return void
      */
-    private function showEdit(): void
+    private function edit(): void
     {
         $studentData = $this->gateway->getStudentByHash($_COOKIE["hash"]);
         $params["values"] = $studentData;
@@ -92,7 +92,7 @@ class ProfileController extends BaseController
      *
      * @return void
      */
-    private function store(): void
+    private function update(): void
     {
         $values = $this->grabPostValues();
         $student = $this->util->createStudent($values);

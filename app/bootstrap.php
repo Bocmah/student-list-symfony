@@ -1,4 +1,5 @@
 <?php
+
 use StudentList\{App, AuthManager};
 use StudentList\Validators\StudentValidator;
 use StudentList\Helpers\{UrlManager, Util, Pager};

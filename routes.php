@@ -1,9 +1,32 @@
 <?php
 
-$router->defineGet("", "HomeController@index");
-$router->defineGet("register", "RegisterController@index");
-$router->defineGet("profile", "ProfileController@index");
-$router->defineGet("profile/edit", "ProfileController@showEdit");
-$router->definePost("register", "RegisterController@store");
-$router->definePost("profile/edit", "ProfileController@store");
-var_dump($router);
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route;
+
+$routes = new RouteCollection();
+
+$routes->add("homepage_index", new Route("/", array(
+    "_controller" => "StudentList\Controllers\HomeController::index"
+), array(), array(), "", array(), array("GET")));
+
+$routes->add("register_page_index", new Route("/register", array(
+    "_controller" => "StudentList\Controllers\RegisterController::index"
+), array(), array(), "", array(), array("GET")));
+
+$routes->add("profile_index", new Route("/profile", array(
+    "_controller" => "StudentList\Controllers\ProfileController::index"
+), array(), array(), "", array(), array("GET")));
+
+$routes->add("profile_edit", new Route("/profile/edit", array(
+    "_controller" => "StudentList\Controllers\ProfileController::edit"
+), array(), array(), "", array(), array("GET")));
+
+$routes->add("register_page_store", new Route("/", array(
+    "_controller" => "StudentList\Controllers\RegisterController::store"
+), array(), array(), "", array(), array("POST")));
+
+$routes->add("homepage", new Route("/", array(
+    "_controller" => "StudentList\Controllers\ProfileController::update"
+), array(), array(), "", array(), array("PUT")));
+
+return $routes;
