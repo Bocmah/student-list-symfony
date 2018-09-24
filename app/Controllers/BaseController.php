@@ -1,24 +1,11 @@
 <?php
+
 namespace StudentList\Controllers;
+
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseController
 {
-    /**
-     * @var string
-     */
-    protected $requestMethod;
-
-    /**
-     * @var string
-     */
-    protected $action;
-
-
-    /**
-     * The entry point of every controller
-     */
-    abstract public function run();
-
     /**
      * Renders the specific view passing $params
      *
@@ -29,6 +16,9 @@ abstract class BaseController
     protected function render($file, array $params = [])
     {
         extract($params,EXTR_SKIP);
-        return require_once "{$file}";
+        ob_start();
+        require __DIR__."/../../views/{$file}";
+
+        return new Response(ob_get_clean());
     }
 }
