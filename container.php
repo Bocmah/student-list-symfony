@@ -4,6 +4,7 @@ use Symfony\Component\DependencyInjection\{ContainerBuilder, Reference};
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\HttpKernel\Controller\{ControllerResolver, ArgumentResolver};
+use StudentList\App;
 use StudentList\Database\{Connection, StudentDataGateway};
 use StudentList\AuthManager;
 use StudentList\Validators\StudentValidator;
@@ -15,9 +16,16 @@ $containerBuilder = new ContainerBuilder();
 // Symfony components
 $containerBuilder->register("context", RequestContext::class);
 $containerBuilder->register("matcher", UrlMatcher::class)
-    ->setArguments(array($routes, new Reference("context")));
+    ->setArguments(array("%routes%", new Reference("context")));
 $containerBuilder->register("controller_resolver", ControllerResolver::class);
 $containerBuilder->register("argument_resolver", ArgumentResolver::class);
+$containerBuilder->register("app", App::class)->setArguments(
+    array(
+        new Reference("matcher"),
+        new Reference("controller_resolver"),
+        new Reference("argument_resolver")
+    )
+);
 
 // Models
 $containerBuilder->register("connection", Connection::class);
@@ -33,4 +41,6 @@ $containerBuilder->register("pager", Pager::class);
 // Controllers
 $containerBuilder->register("home_controller", HomeController::class)
     ->setArguments(array());
+
+return $containerBuilder;
 
