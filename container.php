@@ -3,13 +3,13 @@
 use Symfony\Component\DependencyInjection\{ContainerBuilder, Reference};
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\HttpKernel\Controller\{ControllerResolver, ArgumentResolver};
+use Symfony\Component\HttpKernel\Controller\{ControllerResolver, ArgumentResolver, ContainerControllerResolver};
 use StudentList\App;
 use StudentList\Database\{Connection, StudentDataGateway};
 use StudentList\AuthManager;
 use StudentList\Validators\StudentValidator;
 use StudentList\Helpers\{UrlManager, Util, Pager};
-use StudentList\Controllers\{HomeController, ProfileController, RegisterController};
+use StudentList\Controllers\HomeController;
 
 $containerBuilder = new ContainerBuilder();
 
@@ -17,7 +17,8 @@ $containerBuilder = new ContainerBuilder();
 $containerBuilder->register("context", RequestContext::class);
 $containerBuilder->register("matcher", UrlMatcher::class)
     ->setArguments(array("%routes%", new Reference("context")));
-$containerBuilder->register("controller_resolver", ControllerResolver::class);
+$containerBuilder->register("controller_resolver", ContainerControllerResolver::class)
+    ->setArguments(array("%container%"));
 $containerBuilder->register("argument_resolver", ArgumentResolver::class);
 $containerBuilder->register("app", App::class)->setArguments(
     array(
@@ -28,7 +29,7 @@ $containerBuilder->register("app", App::class)->setArguments(
 );
 
 // Models
-$containerBuilder->register("connection", Connection::class);
+$containerBuilder->register("connection", Connection::class)->setArguments(array("%config%"));
 $containerBuilder->register("auth_manager", AuthManager::class);
 $containerBuilder->register("student_data_gateway", StudentDataGateway::class)
     ->setArguments(array(new Reference("connection")));
@@ -39,8 +40,14 @@ $containerBuilder->register("util", Util::class);
 $containerBuilder->register("pager", Pager::class);
 
 // Controllers
-$containerBuilder->register("home_controller", HomeController::class)
-    ->setArguments(array());
+$containerBuilder->register("StudentList\Controllers\HomeController", HomeController::class)
+    ->setArguments(
+        array(
+            new Reference("pager"),
+            new Reference("student_data_gateway"),
+            new Reference("auth_manager")
+        )
+    );
 
 return $containerBuilder;
 
