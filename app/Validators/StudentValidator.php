@@ -5,7 +5,7 @@ use StudentList\AuthManager;
 use StudentList\Entities\Student;
 use StudentList\Database\StudentDataGateway;
 
-class StudentValidator
+class StudentValidator implements StudentValidatorInterface
 {
     /**
      * @var StudentDataGateway
@@ -36,7 +36,7 @@ class StudentValidator
      *
      * @return array
      */
-    public function validateAllFields(Student $student)
+    public function validate(Student $student)
     {
         $errors = array();
 
@@ -60,7 +60,7 @@ class StudentValidator
      *
      * @return bool|string
      */
-    private function validateName(string $name)
+    protected function validateName(string $name)
     {
         $nameLength = mb_strlen($name);
         // Pattern for name validation
@@ -83,7 +83,7 @@ class StudentValidator
      *
      * @return bool|string
      */
-    private function validateSurname(string $surname)
+    protected function validateSurname(string $surname)
     {
         $surnameLength = mb_strlen($surname);
         // Pattern for surname validation
@@ -106,7 +106,7 @@ class StudentValidator
      *
      * @return bool|string
      */
-    private function validateGender(string $gender)
+    protected function validateGender(string $gender)
     {
         if ($gender !== Student::GENDER_MALE && $gender !== Student::GENDER_FEMALE) {
             return "Вы не выбрали свой пол.";
@@ -120,7 +120,7 @@ class StudentValidator
      *
      * @return bool|string
      */
-    private function validateGroupNumber(string $groupNumber)
+    protected function validateGroupNumber(string $groupNumber)
     {
         $groupNumberLength = mb_strlen($groupNumber);
         // Pattern for group number validation
@@ -143,7 +143,7 @@ class StudentValidator
      *
      * @return bool|string
      */
-    private function validateExamScore(int $examScore)
+    protected function validateExamScore(int $examScore)
     {
         if ($examScore < 50 || $examScore > 300) {
             return "Баллы ЕГЭ должны находиться в интервале от 50 до 300 включительно.";
@@ -156,7 +156,7 @@ class StudentValidator
      *
      * @return bool|string
      */
-    private function validateEmail(string $email)
+    protected function validateEmail(string $email)
     {
         $isAuth = $this->authManager->checkIfAuthorized();
 
@@ -181,7 +181,7 @@ class StudentValidator
      * @param string $email
      * @return bool|string
      */
-    private function validateEmailIfAuth(string $email)
+    protected function validateEmailIfAuth(string $email)
     {
         $currentStudentEmail = $this->studentDataGateway->getStudentByHash(
             $this->authManager->getHash()
@@ -195,7 +195,7 @@ class StudentValidator
      *
      * @return bool|string
      */
-    private function validateBirthYear(int $birthYear)
+    protected function validateBirthYear(int $birthYear)
     {
         if ($birthYear < 1910 || $birthYear > 2008) {
             return "Год рождения должен находиться в интервале от 1910 до 2008 включительно.";
@@ -209,7 +209,7 @@ class StudentValidator
      *
      * @return bool|string
      */
-    private function validateResidence(string $residence)
+    protected function validateResidence(string $residence)
     {
         if ($residence !== Student::RESIDENCE_RESIDENT &&
             $residence !== Student::RESIDENCE_NONRESIDENT) {
