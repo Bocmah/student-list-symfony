@@ -29,10 +29,9 @@ $containerBuilder->register("app", App::class)->setArguments(
 );
 
 // Models
-$containerBuilder->register("connection", Connection::class)->setArguments(array("%config%"));
 $containerBuilder->register("auth_manager", AuthManager::class);
 $containerBuilder->register("student_data_gateway", StudentDataGateway::class)
-    ->setArguments(array(new Reference("connection")));
+    ->setArguments(array("%connection%"));
 $containerBuilder->register("student_validator", StudentValidator::class)
     ->setArguments(array(new Reference("student_data_gateway"), new Reference("auth_manager")));
 $containerBuilder->register("url_manager", UrlManager::class);

@@ -1,14 +1,18 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
+use StudentList\Database\Connection;
 
 require_once __DIR__."/../vendor/autoload.php";
 
 $container = require_once __DIR__."/../container.php";
+$config = require_once __DIR__."/../config.php";
+
+$connection = Connection::make($config);
 
 $container->setParameter("routes", require_once __DIR__."/../routes.php");
-$container->setParameter("config", require_once __DIR__."/../config.php");
 $container->setParameter("container", $container);
+$container->setParameter("connection", $connection);
 
 $request = Request::createFromGlobals();
 

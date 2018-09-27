@@ -1,24 +1,24 @@
 <?php
+
 namespace StudentList\Database;
 
 class Connection
 {
-    protected $config;
-
     /**
      * Establishes PDO connection via data passed through $config
      *
+     * @param array $config
      * @return \PDO
      */
-    public function make(): \PDO
+    public static function make(array $config): \PDO
     {
         try {
             return new \PDO(
-                $this->config["database"]["connection"].";dbname=".$this->config["database"]["name"].
-                ";charset=".$this->config["database"]["encoding"],
-                $this->config["database"]["username"],
-                $this->config["database"]["password"],
-                $this->config["database"]["options"]
+                $config["database"]["connection"].";dbname=".$config["database"]["name"].
+                ";charset=".$config["database"]["encoding"],
+                $config["database"]["username"],
+                $config["database"]["password"],
+                $config["database"]["options"]
             );
         } catch (\PDOException $e) {
             die($e->getMessage());
