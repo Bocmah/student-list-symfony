@@ -4,7 +4,6 @@ namespace StudentList;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -12,8 +11,19 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 
 class App
 {
+    /**
+     * @var UrlMatcher
+     */
     protected $matcher;
+
+    /**
+     * @var ControllerResolver
+     */
     protected $controllerResolver;
+
+    /**
+     * @var ArgumentResolver
+     */
     protected $argumentResolver;
 
     public function __construct(
@@ -26,7 +36,13 @@ class App
         $this->argumentResolver = $argumentResolver;
     }
 
-    public function handle(Request $request)
+    /**
+     * The entry point of the App. Converting Request to Response
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function handle(Request $request): Response
     {
         $this->matcher->getContext()->fromRequest($request);
 

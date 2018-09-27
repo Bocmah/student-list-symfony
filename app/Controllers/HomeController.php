@@ -9,8 +9,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends BaseController
 {
+    /**
+     * @var Pager
+     */
     protected $pager;
+
+    /**
+     * @var StudentDataGateway
+     */
     protected $studentDataGateway;
+
+    /**
+     * @var AuthManager
+     */
     protected $authManager;
 
     public function __construct(
@@ -23,6 +34,12 @@ class HomeController extends BaseController
         $this->authManager = $authManager;
     }
 
+    /**
+     * Show full student list or search results.
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $order = $request->query->get("order", "exam_score");

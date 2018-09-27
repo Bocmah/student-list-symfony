@@ -3,13 +3,13 @@
 use Symfony\Component\DependencyInjection\{ContainerBuilder, Reference};
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\HttpKernel\Controller\{ControllerResolver, ArgumentResolver, ContainerControllerResolver};
+use Symfony\Component\HttpKernel\Controller\{ArgumentResolver, ContainerControllerResolver};
 use StudentList\App;
-use StudentList\Database\{Connection, StudentDataGateway};
+use StudentList\Database\StudentDataGateway;
 use StudentList\AuthManager;
 use StudentList\Validators\StudentValidator;
-use StudentList\Helpers\{UrlManager, Util, Pager};
-use StudentList\Controllers\HomeController;
+use StudentList\Helpers\{UrlManager, Util, Pager, BinToHexHash};
+use StudentList\Controllers\{HomeController, RegisterController};
 
 $containerBuilder = new ContainerBuilder();
 
@@ -35,6 +35,7 @@ $containerBuilder->register("student_data_gateway", StudentDataGateway::class)
 $containerBuilder->register("student_validator", StudentValidator::class)
     ->setArguments(array(new Reference("student_data_gateway"), new Reference("auth_manager")));
 $containerBuilder->register("url_manager", UrlManager::class);
+$containerBuilder->register("hash", BinToHexHash::class);
 $containerBuilder->register("util", Util::class);
 $containerBuilder->register("pager", Pager::class);
 
@@ -43,6 +44,16 @@ $containerBuilder->register("StudentList\Controllers\HomeController", HomeContro
     ->setArguments(
         array(
             new Reference("pager"),
+            new Reference("student_data_gateway"),
+            new Reference("auth_manager")
+        )
+    );
+
+$containerBuilder->register("StudentList\Controllers\RegisterController", RegisterController::class)
+    ->setArguments(
+        array(
+            new Reference("student_validator"),
+            new Reference("hash"),
             new Reference("student_data_gateway"),
             new Reference("auth_manager")
         )

@@ -4,26 +4,6 @@ namespace StudentList\Helpers;
 class UrlManager
 {
     /**
-     * Returns parsed URI
-     *
-     * @return array
-     */
-    public function getUri()
-    {
-        return trim(
-            parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH),"/"
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestMethod()
-    {
-        return $_SERVER["REQUEST_METHOD"];
-    }
-
-    /**
      * Builds link to the particular page
      *
      * @param string $order Order passed into view
@@ -55,12 +35,13 @@ class UrlManager
      *
      * @return string
      */
-    public static function getSortingLink(int $page,
-                                          string $requiredOrder,
-                                          string $currentOrder,
-                                          string $direction,
-                                          string $search = null)
-    {
+    public static function getSortingLink(
+        int $page,
+        string $requiredOrder,
+        string $currentOrder,
+        string $direction,
+        string $search = null
+    ) {
         // If the direction was set to DESC change it to ASC
         // Otherwise set it to DESC
         if ($requiredOrder === $currentOrder && $direction === "DESC") {

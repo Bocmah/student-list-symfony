@@ -20,7 +20,7 @@ $routes->add("profile_edit", new Route("/profile/edit", array(
     "_controller" => "StudentList\Controllers\ProfileController::edit"
 ), array(), array(), "", array(), array("GET")));
 
-$routes->add("register_page_store", new Route("/", array(
+$routes->add("register_page_store", new Route("/register", array(
     "_controller" => "StudentList\Controllers\RegisterController::store"
 ), array(), array(), "", array(), array("POST")));
 
