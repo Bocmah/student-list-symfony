@@ -24,6 +24,13 @@ class HomeController extends BaseController
      */
     protected $authManager;
 
+    /**
+     * Create a new HomeController instance
+     *
+     * @param Pager $pager
+     * @param StudentDataGateway $studentDataGateway
+     * @param AuthManager $authManager
+     */
     public function __construct(
         Pager $pager,
         StudentDataGateway $studentDataGateway,

@@ -31,6 +31,14 @@ class RegisterController extends BaseController
      */
     protected $authManager;
 
+    /**
+     * Create a new RegisterController instance
+     *
+     * @param StudentValidatorInterface $studentValidator
+     * @param HashInterface $hash
+     * @param StudentDataGateway $studentDataGateway
+     * @param AuthManager $authManager
+     */
     public function __construct(
         StudentValidatorInterface $studentValidator,
         HashInterface $hash,
@@ -43,11 +51,22 @@ class RegisterController extends BaseController
         $this->authManager = $authManager;
     }
 
+    /**
+     * Show register page
+     *
+     * @return mixed
+     */
     public function index()
     {
         return $this->render("register.view.php");
     }
 
+    /**
+     * Register a new user
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $values = [];

@@ -27,6 +27,12 @@ class ProfileController extends BaseController
         $this->studentValidator = $studentValidator;
     }
 
+    /**
+     * Show authorized user's profile
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $studentData = $this->studentDataGateway->getStudentByHash($request->cookies->get("hash"));
@@ -35,6 +41,12 @@ class ProfileController extends BaseController
         return $this->render("profile.view.php", $params);
     }
 
+    /**
+     * Show profile edit page
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function edit(Request $request)
     {
         $studentData = $this->studentDataGateway->getStudentByHash($request->cookies->get("hash"));
@@ -43,6 +55,12 @@ class ProfileController extends BaseController
         return $this->render("register.view.php", $params);
     }
 
+    /**
+     * Update authorized user's profile
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function update(Request $request)
     {
         $values = [];
