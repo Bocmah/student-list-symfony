@@ -9,7 +9,7 @@ use StudentList\Database\StudentDataGateway;
 use StudentList\AuthManager;
 use StudentList\Validators\StudentValidator;
 use StudentList\Helpers\{UrlManager, Util, Pager, BinToHexHash};
-use StudentList\Controllers\{HomeController, RegisterController};
+use StudentList\Controllers\{HomeController, RegisterController, ProfileController};
 
 $containerBuilder = new ContainerBuilder();
 
@@ -56,6 +56,14 @@ $containerBuilder->register("StudentList\Controllers\RegisterController", Regist
             new Reference("hash"),
             new Reference("student_data_gateway"),
             new Reference("auth_manager")
+        )
+    );
+
+$containerBuilder->register("StudentList\Controllers\ProfileController", ProfileController::class)
+    ->setArguments(
+        array(
+            new Reference("student_data_gateway"),
+            new Reference("student_validator")
         )
     );
 

@@ -13,10 +13,11 @@ class Util
      *
      * @return void
      */
-    public static function showSortingArrow(string $requiredOrder,
-                                            string $currentOrder,
-                                            string $direction): void
-    {
+    public static function showSortingArrow(
+        string $requiredOrder,
+        string $currentOrder,
+        string $direction
+    ): void {
         if ($requiredOrder === $currentOrder && $direction === "DESC") {
             echo "<span uk-icon='icon: arrow-down'></span>";
         } elseif ($requiredOrder === $currentOrder && $direction === "ASC") {

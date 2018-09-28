@@ -24,8 +24,8 @@ $routes->add("register_page_store", new Route("/register", array(
     "_controller" => "StudentList\Controllers\RegisterController::store"
 ), array(), array(), "", array(), array("POST")));
 
-$routes->add("homepage", new Route("/", array(
+$routes->add("profile_update", new Route("/profile/edit", array(
     "_controller" => "StudentList\Controllers\ProfileController::update"
-), array(), array(), "", array(), array("PUT")));
+), array(), array(), "", array(), array("POST")));
 
 return $routes;
