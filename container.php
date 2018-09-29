@@ -10,7 +10,7 @@ use StudentList\Database\StudentDataGateway;
 use StudentList\AuthManager;
 use StudentList\Validators\StudentValidator;
 use StudentList\Helpers\{UrlManager, Util, Pager, BinToHexHash};
-use StudentList\EventListeners\LoggedInUserListener;
+use StudentList\EventListeners\{LoggedInUserListener, AnonymousUserListener};
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use StudentList\Controllers\{HomeController, RegisterController, ProfileController};
@@ -40,13 +40,16 @@ $containerBuilder->register("pager", Pager::class);
 // Events listeners
 $containerBuilder->register("listener.logged_in_user", LoggedInUserListener::class)
     ->setArguments(array(new Reference("auth_manager")));
+$containerBuilder->register("listener.anonymous_user", AnonymousUserListener::class)
+    ->setArguments(array(new Reference("auth_manager")));
 $containerBuilder->register("listener.router", RouterListener::class)
     ->setArguments(array(new Reference("matcher"), new Reference("request_stack")));
 
 // Event dispatcher
 $containerBuilder->register("dispatcher", EventDispatcher::class)
     ->addMethodCall("addSubscriber", array(new Reference("listener.router")))
-    ->addMethodCall("addSubscriber", array(new Reference("listener.logged_in_user")));
+    ->addMethodCall("addSubscriber", array(new Reference("listener.logged_in_user")))
+    ->addMethodCall("addSubscriber", array(new Reference("listener.anonymous_user")));
 
 // App
 $containerBuilder->register("app", App::class)->setArguments(
