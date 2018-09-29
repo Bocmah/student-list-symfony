@@ -1,4 +1,5 @@
 <?php
+
 namespace StudentList\Helpers;
 
 class UrlManager

@@ -1,4 +1,5 @@
 <?php
+
 namespace StudentList\Database;
 
 use StudentList\Entities\Student;

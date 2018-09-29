@@ -67,6 +67,8 @@ class HomeController extends BaseController
                 $order,
                 $direction
             );
+
+            $rowCount = $this->studentDataGateway->countSearchRows($search);
         } else {
             $students = $this->studentDataGateway->getStudents(
                 $offset,
@@ -74,9 +76,10 @@ class HomeController extends BaseController
                 $order,
                 $direction
             );
-        }
 
-        $rowCount = $this->studentDataGateway->countTableRows();
+            $rowCount = $this->studentDataGateway->countTableRows();
+        }
+        
         $totalPages = $this->pager->calculateTotalPages($rowCount);
         $start = $this->pager->calculateStartingPoint($page);
         $end = $this->pager->calculateEndingPoint($page, $totalPages);
