@@ -65,7 +65,8 @@ $ cp config.php.example config.php
 * Сортировка по любому столбцу списка
 * Поиск по любому столбцу списка
 
-
+## Скриншоты
+![image](https://user-images.githubusercontent.com/32432647/46250191-56ea1d00-c43e-11e8-8411-52f603c8d773.png)
 
 
 
