@@ -1,4 +1,5 @@
 <?php
+
 namespace StudentList;
 
 class AuthManager
@@ -16,9 +17,9 @@ class AuthManager
     /**
      * @return bool
      */
-    public function checkIfAuthorized()
+    public function checkIfAuthorized(): bool
     {
-        return isset($_COOKIE["hash"]) ? true : false;
+        return isset($_COOKIE["hash"]);
     }
 
     /**

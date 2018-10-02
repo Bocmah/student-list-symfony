@@ -1,4 +1,5 @@
 <?php
+
 namespace StudentList\Validators;
 
 use StudentList\AuthManager;

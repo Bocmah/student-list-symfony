@@ -65,15 +65,16 @@ class Student
      * @param string $gender
      * @param string $residence
      */
-    public function __construct(string $name,
-                                string $surname,
-                                string $groupNumber,
-                                string $email,
-                                int $examScore,
-                                int $birthYear,
-                                string $gender,
-                                string $residence)
-    {
+    public function __construct(
+        string $name,
+        string $surname,
+        string $groupNumber,
+        string $email,
+        int $examScore,
+        int $birthYear,
+        string $gender,
+        string $residence
+    ) {
         $this->name = $name;
         $this->surname = $surname;
         $this->groupNumber = $groupNumber;
